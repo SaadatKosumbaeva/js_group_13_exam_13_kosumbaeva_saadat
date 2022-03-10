@@ -1,11 +1,13 @@
-<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
-  <a routerLink="/">Logo</a>
-  <nav *ngIf="true; else userMenu">
-    <a routerLink="/register" mat-button>REGISTER</a>
-    <a routerLink="/login" mat-button>SIGN IN</a>
-  </nav>
+<mat-toolbar color="primary">
+  <div class="container toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+    <a routerLink="/">Logo</a>
+    <nav *ngIf="!(user | async); else userMenu">
+      <a routerLink="/register" mat-button>REGISTER</a>
+      <a routerLink="/login" mat-button>SIGN IN</a>
+    </nav>
+  </div>
 </mat-toolbar>
-<div class="content">
+<div class="container">
   <ng-content></ng-content>
 </div>
 

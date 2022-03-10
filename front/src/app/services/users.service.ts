@@ -16,7 +16,7 @@ export class UsersService {
   }
 
   login(userData: LoginUserData) {
-    return this.http.post(env.apiUrl + '/users/sessions', userData);
+    return this.http.post<User>(env.apiUrl + '/users/sessions', userData);
   }
 
   logout(token: string) {

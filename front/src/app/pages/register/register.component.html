@@ -14,6 +14,7 @@
              required matInput ngModel #password="ngModel">
       <mat-error *ngIf="password.touched && password.hasError('required')">Password is required!</mat-error>
     </mat-form-field>
-    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">REGISTER</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid || (loading | async)">REGISTER
+    </button>
   </form>
 </app-centered-card>

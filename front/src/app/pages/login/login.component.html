@@ -1,20 +1,27 @@
 <app-centered-card title="Sign in">
   <form #f="ngForm" (ngSubmit)="onSubmit()" fxLayout="column" autocomplete="off">
+    <div *ngIf="error | async" class="error">
+      {{ (error | async)?.error }}
+    </div>
+
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input type="email" name="email" autocomplete="username"
              email required matInput ngModel #email="ngModel">
+      <mat-error *ngIf="email.touched && email.hasError('required')">Email is required!</mat-error>
+      <mat-error *ngIf="email.touched && email.hasError('email')">Enter correct email!</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
       <input type="password" name="password" autocomplete="current-password"
              required matInput ngModel #password="ngModel">
+      <mat-error *ngIf="password.touched && password.hasError('required')">Password is required!</mat-error>
     </mat-form-field>
 
     <div class="reg-link" fxLayout="row" fxLayoutAlign="center">
       <a routerLink="/register">Don't have an account? Sign up!</a>
     </div>
 
-    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">SIGN IN</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid || (loading | async)">SIGN IN</button>
   </form>
 </app-centered-card>

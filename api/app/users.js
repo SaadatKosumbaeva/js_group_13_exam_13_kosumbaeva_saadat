@@ -28,7 +28,7 @@ router.post('/', async (req, res, next) => {
 router.post('/sessions', async (req, res, next) => {
   try {
     if (!req.body.email || !req.body.password) {
-      return res.status(400).send({error: 'Email and password are required!'});
+      return res.status(422).send({error: 'Email and password are required!'});
     }
 
     const user = await User.findOne({email: req.body.email});
