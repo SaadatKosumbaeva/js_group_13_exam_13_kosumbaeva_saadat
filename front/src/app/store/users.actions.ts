@@ -9,5 +9,8 @@ export const loginUserRequest = createAction('[Users] Login Request', props<{ us
 export const loginUserSuccess = createAction('[Users] Login Success', props<{ user: User }>());
 export const loginUserFailure = createAction('[Users] Login Failure', props<{ error: null | LoginError }>());
 
+export const logoutUser = createAction('[Users] Logout User');
+export const logoutUserRequest = createAction('[Users] Server Logout Request');
+
 
 

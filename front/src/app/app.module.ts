@@ -19,11 +19,21 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FileInputComponent } from './ui/file-input/file-input.component';
-import { StoreModule } from '@ngrx/store';
+import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { usersReducer } from './store/users.reducer';
 import { UsersEffects } from './store/users.effects';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { localStorageSync } from 'ngrx-store-localstorage';
+
+const localStorageSyncReducer = (reducer: ActionReducer<any>) => {
+  return localStorageSync({
+    keys: [{users: ['user']}],
+    rehydrate: true
+  })(reducer);
+}
+
+const metaReducers: MetaReducer[] = [localStorageSyncReducer];
 
 @NgModule({
   declarations: [
@@ -49,7 +59,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
-    StoreModule.forRoot({users: usersReducer}, {}),
+    StoreModule.forRoot({users: usersReducer}, {metaReducers}),
     EffectsModule.forRoot([UsersEffects]),
   ],
   providers: [],

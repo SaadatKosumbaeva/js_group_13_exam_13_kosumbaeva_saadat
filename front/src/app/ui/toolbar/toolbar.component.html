@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <div class="container toolbar" fxLayout="row" fxLayoutAlign="space-between center">
     <a routerLink="/">Logo</a>
-    <nav *ngIf="!(user | async); else userMenu">
+    <nav *ngIf="!(user | async) else userMenu">
       <a routerLink="/register" mat-button>REGISTER</a>
       <a routerLink="/login" mat-button>SIGN IN</a>
     </nav>
@@ -18,7 +18,7 @@
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item>Profile</button>
-      <button mat-menu-item>Logout</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
   </nav>
 </ng-template>
