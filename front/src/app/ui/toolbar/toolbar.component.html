@@ -1,0 +1,22 @@
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+  <a routerLink="/">Logo</a>
+  <nav *ngIf="true; else userMenu">
+    <a routerLink="/register" mat-button>REGISTER</a>
+    <a routerLink="/login" mat-button>SIGN IN</a>
+  </nav>
+</mat-toolbar>
+<div class="content">
+  <ng-content></ng-content>
+</div>
+
+<ng-template #userMenu>
+  <nav>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Profile</button>
+      <button mat-menu-item>Logout</button>
+    </mat-menu>
+  </nav>
+</ng-template>
