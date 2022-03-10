@@ -25,6 +25,7 @@ import { usersReducer } from './store/users.reducer';
 import { UsersEffects } from './store/users.effects';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { ImagePipe } from './pipes/image.pipe';
 
 const localStorageSyncReducer = (reducer: ActionReducer<any>) => {
   return localStorageSync({
@@ -43,6 +44,7 @@ const metaReducers: MetaReducer[] = [localStorageSyncReducer];
     LoginComponent,
     CenteredCardComponent,
     FileInputComponent,
+    ImagePipe,
   ],
   imports: [
     BrowserModule,
