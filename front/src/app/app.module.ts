@@ -19,6 +19,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FileInputComponent } from './ui/file-input/file-input.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { usersReducer } from './store/users.reducer';
+import { UsersEffects } from './store/users.effects';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -43,6 +48,9 @@ import { FileInputComponent } from './ui/file-input/file-input.component';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSnackBarModule,
+    StoreModule.forRoot({users: usersReducer}, {}),
+    EffectsModule.forRoot([UsersEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
