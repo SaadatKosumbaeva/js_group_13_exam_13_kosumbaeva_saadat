@@ -31,6 +31,13 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
         } else {
           this.form.form.get('email')?.setErrors(null);
         }
+
+        if (err.errors.displayName) {
+          const msg = err.errors.displayName.message;
+          this.form.form.get('displayName')?.setErrors({serverError: msg});
+        } else {
+          this.form.form.get('displayName')?.setErrors(null);
+        }
       }
     });
   }

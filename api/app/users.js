@@ -10,6 +10,7 @@ router.post('/', async (req, res, next) => {
     const userData = {
       email: req.body.email,
       password: req.body.password,
+      displayName: req.body.displayName,
     };
 
     const user = new User(userData);
@@ -54,7 +55,7 @@ router.post('/sessions', async (req, res, next) => {
 
 router.get('/secret', auth, async (req, res, next) => {
   try {
-    return res.send({message: 'Hello, ' + req.user.email});
+    return res.send({message: 'Hello, ' + req.user.displayName});
   } catch (e) {
     return next(e);
   }

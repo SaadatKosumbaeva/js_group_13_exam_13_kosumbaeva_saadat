@@ -13,11 +13,12 @@
 
 <ng-template #userMenu>
   <nav>
+  <span>Hello, {{ (user | async)?.['displayName'] }}</span>
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>account_circle</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>Profile</button>
+      <button mat-menu-item disabled>{{ (user | async)?.['email'] }}</button>
       <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
   </nav>
