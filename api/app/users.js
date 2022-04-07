@@ -7,6 +7,10 @@ const router = express.Router();
 
 router.post('/', async (req, res, next) => {
   try {
+    if (!req.body.email || !req.body.password || !req.body.displayName) {
+      return res.status(422).send({error: 'Email, password, and display name are required!'});
+    }
+
     const userData = {
       email: req.body.email,
       password: req.body.password,
@@ -66,15 +70,11 @@ router.delete('/sessions', async (req, res, next) => {
     const token = req.get('Authorization');
     const message = {message: 'OK!'};
 
-    if (!token) {
-      return res.send(message);
-    }
+    if (!token) return res.send(message);
 
     const user = await User.findOne({token});
 
-    if (!user) {
-      return res.send(message);
-    }
+    if (!user) return res.send(message);
 
     user.generateToken();
     await user.save();

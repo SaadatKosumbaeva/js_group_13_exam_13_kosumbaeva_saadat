@@ -1,25 +1,25 @@
 <mat-toolbar color="primary">
   <div class="container toolbar" fxLayout="row" fxLayoutAlign="space-between center">
     <a routerLink="/">Logo</a>
-    <nav *ngIf="!(user | async) else userMenu">
-      <a routerLink="/register" mat-button>REGISTER</a>
-      <a routerLink="/login" mat-button>SIGN IN</a>
+    <nav *appUserType="'user'; else anonMenu">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item disabled>{{ (user | async)?.['email'] }}</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
     </nav>
   </div>
 </mat-toolbar>
+
+<ng-template #anonMenu>
+  <nav>
+    <a routerLink="/register" mat-button>REGISTER</a>
+    <a routerLink="/login" mat-button>SIGN IN</a>
+  </nav>
+</ng-template>
+
 <div class="container">
   <ng-content></ng-content>
 </div>
-
-<ng-template #userMenu>
-  <nav>
-  <span>Hello, {{ (user | async)?.['displayName'] }}</span>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>account_circle</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item disabled>{{ (user | async)?.['email'] }}</button>
-      <button mat-menu-item (click)="logout()">Logout</button>
-    </mat-menu>
-  </nav>
-</ng-template>
