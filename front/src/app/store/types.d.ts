@@ -6,6 +6,7 @@ export type UsersState = {
   registerError: null | RegisterError,
   loginLoading: boolean,
   loginError: null | LoginError,
+  fbLoginLoading: boolean,
 };
 
 export type AppState = {

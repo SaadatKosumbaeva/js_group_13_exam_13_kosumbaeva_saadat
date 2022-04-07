@@ -22,6 +22,22 @@
       <a routerLink="/register">Don't have an account? Sign up!</a>
     </div>
 
-    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid || (loading | async)">SIGN IN</button>
+    <button type="submit"
+            mat-raised-button
+            color="primary"
+            [disabled]="f.invalid || (loading | async)">
+      <mat-spinner *ngIf="loading | async"></mat-spinner>
+      <span *ngIf="!(loading | async)">SIGN IN</span>
+    </button>
+
+    <button type="button"
+            mat-raised-button
+            (click)="fbLogin()"
+            [disabled]="fbLoading | async">
+      <img src="assets/icons/fb.svg" alt="facebook logo">
+      &nbsp;&nbsp;
+      <mat-spinner *ngIf="fbLoading | async" style="display: inline" diameter="25"></mat-spinner>
+      <span *ngIf="!(fbLoading | async)">SIGN IN WITH FACEBOOK</span>
+    </button>
   </form>
 </app-centered-card>

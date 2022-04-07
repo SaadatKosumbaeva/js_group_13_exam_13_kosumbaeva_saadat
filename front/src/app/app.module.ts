@@ -8,7 +8,7 @@ import { ToolbarComponent } from './ui/toolbar/toolbar.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CenteredCardComponent } from './ui/centered-card/centered-card.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -23,6 +23,23 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ImagePipe } from './pipes/image.pipe';
 import { UserTypeDirective } from './directives/user-type.directive';
 import { HasRolesDirective } from './directives/has-roles.directive';
+import { FacebookLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
+import { environment } from '../environments/environment';
+import { AuthInterceptor } from './auth.interceptor';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AppStoreModule } from './store/app-store.module';
+
+const socialConfig: SocialAuthServiceConfig = {
+  autoLogin: false,
+  providers: [
+    {
+      id: FacebookLoginProvider.PROVIDER_ID,
+      provider: new FacebookLoginProvider(environment.fbAppId, {
+        scope: 'email,public_profile',
+      }),
+    },
+  ],
+};
 
 @NgModule({
   declarations: [
@@ -51,8 +68,14 @@ import { HasRolesDirective } from './directives/has-roles.directive';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    SocialLoginModule,
+    MatProgressSpinnerModule,
+    AppStoreModule,
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: 'SocialAuthServiceConfig', useValue: socialConfig},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

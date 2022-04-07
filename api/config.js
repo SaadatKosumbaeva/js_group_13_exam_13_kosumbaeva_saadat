@@ -9,4 +9,8 @@ module.exports = {
     db: 'mongodb://localhost/project-template',
     options: {useNewUrlParser: true},
   },
+  facebook: {
+    appId: '',
+    appSecret: '',
+  },
 };
