@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/types';
-import { registerUserRequest } from '../../store/users.actions';
+import { registerUserRequest } from '../../store/users/users.actions';
 import { Observable, Subscription } from 'rxjs';
 import { RegisterError } from '../../models/user.model';
 

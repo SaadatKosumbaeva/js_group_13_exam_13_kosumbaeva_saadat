@@ -26,6 +26,8 @@ const run = async () => {
       token: nanoid(),
     },
   );
+
+  await mongoose.connection.close();
 };
 
-run().catch(e => console.log(e));
+run().catch(e => console.error(e));

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { UsersService } from '../services/users.service';
+import { UsersService } from '../../services/users.service';
 import {
   loginUserFailure,
   loginUserRequest,
@@ -11,11 +11,9 @@ import {
   registerUserRequest,
   registerUserSuccess
 } from './users.actions';
-import { map, mergeMap, NEVER, tap, withLatestFrom } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { HelpersService } from '../services/helpers.service';
-import { Store } from '@ngrx/store';
-import { AppState } from './types';
+import { HelpersService } from '../../services/helpers.service';
 
 @Injectable()
 export class UsersEffects {
@@ -23,8 +21,7 @@ export class UsersEffects {
   constructor(private actions: Actions,
               private router: Router,
               private usersService: UsersService,
-              private helpers: HelpersService,
-              private store: Store<AppState>) {
+              private helpers: HelpersService,) {
   }
 
   registerUser = createEffect(() => this.actions.pipe(
@@ -53,16 +50,14 @@ export class UsersEffects {
 
   logoutUser = createEffect(() => this.actions.pipe(
     ofType(logoutUserRequest),
-    withLatestFrom(this.store.select(state => state.users.user)),
-    mergeMap(([_, user]) => {
-      if (user) {
-        return this.usersService.logout(user.token).pipe(
-          map(() => logoutUser()),
-          tap(() => this.helpers.openSnackBar('Logout successful!')),
-        );
-      }
-
-      return NEVER;
+    mergeMap(() => {
+      return this.usersService.logout().pipe(
+        map(() => logoutUser()),
+        tap(async () => {
+          await this.router.navigate(['/']);
+          this.helpers.openSnackBar('Logout successful!');
+        }),
+      );
     }),
   ));
 }

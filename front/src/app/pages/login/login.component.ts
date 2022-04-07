@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { LoginError } from '../../models/user.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/types';
-import { loginUserRequest } from '../../store/users.actions';
+import { loginUserRequest } from '../../store/users/users.actions';
 
 @Component({
   selector: 'app-login',
