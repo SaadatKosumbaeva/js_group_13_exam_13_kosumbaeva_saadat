@@ -38,6 +38,11 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    default: 'user',
+    enum: ['user', 'admin'],
+  },
 });
 
 const SALT_WORK_FACTOR = 10;

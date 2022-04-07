@@ -3,6 +3,7 @@ export interface User {
   email: string,
   displayName: string,
   token: string,
+  role: string,
 }
 
 export interface RegisterUserData {

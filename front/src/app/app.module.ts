@@ -21,6 +21,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FileInputComponent } from './ui/file-input/file-input.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ImagePipe } from './pipes/image.pipe';
+import { UserTypeDirective } from './directives/user-type.directive';
+import { HasRolesDirective } from './directives/has-roles.directive';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { ImagePipe } from './pipes/image.pipe';
     CenteredCardComponent,
     FileInputComponent,
     ImagePipe,
+    UserTypeDirective,
+    HasRolesDirective,
   ],
   imports: [
     BrowserModule,
