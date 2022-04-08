@@ -12,13 +12,20 @@ export class UsersService {
   }
 
   register(userData: RegisterUserData) {
-    return this.http.post<User>(env.apiUrl + '/users', userData);
+    const formData = new FormData();
+
+    Object.keys(userData).forEach(key => {
+      if (userData[key] !== null) {
+        formData.append(key, userData[key]);
+      }
+    });
+
+    return this.http.post<User>(environment.apiUrl + '/users', formData);
   }
 
   login(userData: LoginUserData) {
     return this.http.post<User>(env.apiUrl + '/users/sessions', userData);
   }
-
 
   fbLoginUser(userData: FbLoginUserData) {
     return this.http.post<User>(environment.apiUrl + '/users/facebookLogin', userData);

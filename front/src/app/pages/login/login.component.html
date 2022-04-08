@@ -25,7 +25,8 @@
     <button type="submit"
             mat-raised-button
             color="primary"
-            [disabled]="f.invalid || (loading | async)">
+            [disabled]="f.invalid || (loading | async)"
+            style="margin-bottom: 16px">
       <mat-spinner *ngIf="loading | async"></mat-spinner>
       <span *ngIf="!(loading | async)">SIGN IN</span>
     </button>

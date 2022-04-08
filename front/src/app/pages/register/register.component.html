@@ -23,7 +23,14 @@
       <mat-error *ngIf="displayName.touched && displayName.hasError('serverError')">{{ displayName.getError('serverError') }}</mat-error>
     </mat-form-field>
 
-    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid || (loading | async)">REGISTER
+    <mat-form-field appearance="outline">
+      <mat-label>Avatar</mat-label>
+      <app-file-input name="avatar" ngModel></app-file-input>
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid || (loading | async)">
+      <mat-spinner *ngIf="loading | async" diameter="25"></mat-spinner>
+      <span *ngIf="!(loading | async)">REGISTER</span>
     </button>
   </form>
 </app-centered-card>

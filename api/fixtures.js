@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const {nanoid} = require('nanoid');
-const config = require('config');
+const config = require('./config');
 const User = require('./models/User');
 
 const run = async () => {
@@ -17,12 +17,16 @@ const run = async () => {
       email: 'user@user',
       password: '123',
       displayName: 'John Doe',
+      avatar: 'avatars/user1.png',
+      role: 'user',
       token: nanoid(),
     },
     {
-      email: 'user2@user',
+      email: 'admin@admin',
       password: '123',
-      displayName: 'Isaac Newton',
+      displayName: 'Admin',
+      avatar: 'avatars/user2.jpg',
+      role: 'admin',
       token: nanoid(),
     },
   );

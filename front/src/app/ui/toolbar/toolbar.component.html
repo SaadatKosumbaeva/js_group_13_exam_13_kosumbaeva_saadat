@@ -1,12 +1,12 @@
 <mat-toolbar color="primary">
   <div class="container toolbar" fxLayout="row" fxLayoutAlign="space-between center">
     <a routerLink="/">Logo</a>
-    <nav *appUserType="'user'; else anonMenu">
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>account_circle</mat-icon>
+    <nav *appUserType="'user'; else anonMenu" fxLayout="row" fxLayoutAlign="space-between center">
+      <button mat-button [matMenuTriggerFor]="menu">
+        <img [src]="userData?.avatar | image" [alt]="userData?.displayName">
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item disabled>{{ (user | async)?.['email'] }}</button>
+        <button mat-menu-item disabled>{{ userData?.displayName }}</button>
         <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
     </nav>

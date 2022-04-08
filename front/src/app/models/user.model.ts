@@ -4,12 +4,16 @@ export interface User {
   displayName: string,
   token: string,
   role: string,
+  avatar: string,
 }
 
 export interface RegisterUserData {
+  [key: string]: any,
+
   email: string,
   password: string,
   displayName: string,
+  avatar: null | File,
 }
 
 export interface LoginUserData {

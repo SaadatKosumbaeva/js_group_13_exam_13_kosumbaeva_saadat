@@ -32,8 +32,8 @@ const createMulter = dirName => {
   return multer({storage});
 };
 
-const somethingS = createMulter('somethingS');
+const avatars = createMulter('avatars');
 
 module.exports = {
-  somethingS,
+  avatars,
 };
