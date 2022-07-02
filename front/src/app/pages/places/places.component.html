@@ -1,8 +1,5 @@
 <h3 class="title">All places</h3>
 
 <div fxLayout="row wrap" fxLayoutGap="16px">
-  <app-place></app-place>
-  <app-place></app-place>
-  <app-place></app-place>
-  <app-place></app-place>
+  <app-place *ngFor="let p of (places | async)" [place]="p"></app-place>
 </div>

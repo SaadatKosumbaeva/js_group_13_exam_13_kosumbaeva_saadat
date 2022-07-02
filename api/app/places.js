@@ -1,7 +1,5 @@
 const express = require('express');
 const Place = require('../models/Place');
-const Image = require('../models/Image');
-const Review = require('../models/Review');
 const auth = require('../middleware/auth');
 const permit = require('../middleware/permit');
 const {images} = require('../multer');
@@ -27,16 +25,7 @@ router.get('/:id', async (req, res, next) => {
       return res.status(404).send({error: `Not found by id = ${req.params.id}`});
     }
 
-    const images = await Image.find({place: req.params.id});
-    const reviews = await Review.find({place: req.params.id}).populate('user', 'displayName');
-
-    const data = {
-      place,
-      images,
-      reviews,
-    };
-
-    return res.send(data);
+    return res.send(place);
   } catch (e) {
     next(e);
   }
@@ -93,8 +82,6 @@ router.delete('/:id', auth, permit('admin'), images.single('mainImage'), async (
       return res.status(404).send({error: `Not found by id = ${req.params.id}`});
     }
 
-    await Image.deleteMany({place: req.params.id});
-    await Review.deleteMany({place: req.params.id});
     await Place.findByIdAndDelete(req.params.id);
 
     return res.send({message: `Deleted by id = ${req.params.id}`});

@@ -1,16 +1,16 @@
 <mat-card class="card">
   <mat-card-content fxLayout="column">
     <img
-      [src]="'http://inspirationfeeed.files.wordpress.com/2013/02/link-7-spring_celebration_by_lavaspawn-d4y1t53.jpg'"
-      [alt]=""/>
+      [src]="place.mainImage | image"
+      [alt]="place.title"/>
     <a [routerLink]="['places', 'id']">
-      <mat-card-title>Title</mat-card-title>
+      <mat-card-title>{{ place.title }}</mat-card-title>
     </a>
-    <ngb-rating [max]="5" [readonly]="true" [rate]="4"></ngb-rating>
-    <p>(4.6, 220 reviews)</p>
+    <ngb-rating [max]="5" [readonly]="true" [rate]="place.averageRate"></ngb-rating>
+    <p>({{ place.averageRate }}; {{ place.reviews.length}} reviews)</p>
     <p fxLayout="row" fxLayoutAlign="start center">
       <span class="material-icons">photo_camera</span>&nbsp;
-      <span>20 photos</span>
+      <span>{{ place.images.length }} photos</span>
     </p>
     <div *appHasRoles="['admin']">
       <button mat-raised-button color="warn" (click)="remove()">Delete</button>
