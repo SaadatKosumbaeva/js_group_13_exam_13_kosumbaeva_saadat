@@ -1,14 +1,16 @@
 <mat-toolbar color="primary">
   <div class="container toolbar" fxLayout="row" fxLayoutAlign="space-between center">
-    <a routerLink="/">Logo</a>
+    <a routerLink="/">Cafe Critic</a>
     <nav *appUserType="'user'; else anonMenu" fxLayout="row" fxLayoutAlign="space-between center">
-      <button mat-button [matMenuTriggerFor]="menu">
-        <img [src]="userData?.avatar | image" [alt]="userData?.displayName">
+      <span>Hello, {{ userData?.displayName }}</span>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <span class="material-icons">arrow_drop_down</span>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item disabled>{{ userData?.displayName }}</button>
         <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
+      <a routerLink="/new-place" mat-stroked-button>Add new place</a>&nbsp;&nbsp;
+      <img [src]="userData?.avatar | image" [alt]="userData?.displayName">
     </nav>
   </div>
 </mat-toolbar>

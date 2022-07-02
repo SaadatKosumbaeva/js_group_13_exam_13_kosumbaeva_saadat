@@ -28,6 +28,14 @@ import { environment } from '../environments/environment';
 import { AuthInterceptor } from './auth.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppStoreModule } from './store/app-store.module';
+import { PlaceComponent } from './ui/place/place.component';
+import { PlacesComponent } from './pages/places/places.component';
+import { EditPlaceComponent } from './pages/edit-place/edit-place.component';
+import { PlaceDetailsComponent } from './pages/place-details/place-details.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatSelectModule } from '@angular/material/select';
 
 const socialConfig: SocialAuthServiceConfig = {
   autoLogin: false,
@@ -52,6 +60,10 @@ const socialConfig: SocialAuthServiceConfig = {
     ImagePipe,
     UserTypeDirective,
     HasRolesDirective,
+    PlaceComponent,
+    PlacesComponent,
+    EditPlaceComponent,
+    PlaceDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,10 +83,14 @@ const socialConfig: SocialAuthServiceConfig = {
     SocialLoginModule,
     MatProgressSpinnerModule,
     AppStoreModule,
+    MatProgressBarModule,
+    MatCheckboxModule,
+    NgbModule,
+    MatSelectModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    {provide: 'SocialAuthServiceConfig', useValue: socialConfig},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: 'SocialAuthServiceConfig', useValue: socialConfig },
   ],
   bootstrap: [AppComponent]
 })

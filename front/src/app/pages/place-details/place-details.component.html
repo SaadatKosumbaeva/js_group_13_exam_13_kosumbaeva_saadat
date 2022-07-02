@@ -1,0 +1,128 @@
+<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="32px">
+  <div>
+    <h4 class="title">Place title</h4>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, amet atque aut consequuntur corporis cumque
+      dicta
+      dolore dolorum ea enim eos error ex expedita iste laborum neque non nostrum perferendis placeat quae quisquam quos
+      repellendus sint soluta tempora ullam vitae voluptatem. Accusantium ad aliquam culpa dolorum explicabo provident
+      quisquam reprehenderit.</p>
+  </div>
+  <div>
+    <img class="main-img"
+         [src]="'http://inspirationfeeed.files.wordpress.com/2013/02/link-7-spring_celebration_by_lavaspawn-d4y1t53.jpg'"
+         [alt]="">
+    <div *appHasRoles="['admin']">
+      <button mat-raised-button color="warn" (click)="remove()">Delete</button>
+    </div>
+  </div>
+</div>
+<div>
+  <h6 class="subtitle">Gallery</h6>
+  <div fxLayout="row wrap" fxLayoutGap="16px">
+    <div class="img-wrap">
+      <img class="img"
+           [src]="'http://inspirationfeeed.files.wordpress.com/2013/02/link-7-spring_celebration_by_lavaspawn-d4y1t53.jpg'"
+           [alt]="">
+      <div *appHasRoles="['admin']">
+        <button mat-raised-button color="warn" (click)="remove()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="break-line">
+
+<mat-card class="review-block">
+  <h6 class="subtitle">Ratings</h6>
+  <p>On 20.06.2022, John Doe said</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos earum excepturi impedit magnam nobis nostrum
+    quisquam? Aspernatur dolores repellat vero!</p>
+  <div fxLayout="column" class="user-review">
+    <div fxLayout="row" fxLayoutGap="16px">
+      <span>Quality of food</span>
+      <ngb-rating [max]="5" [readonly]="true" [rate]="4"></ngb-rating>
+      <span>5.0</span>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="16px">
+      <span>Service quality</span>
+      <ngb-rating [max]="5" [readonly]="true" [rate]="4"></ngb-rating>
+      <span>5.0</span>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="16px">
+      <span>Interior</span>
+      <ngb-rating [max]="5" [readonly]="true" [rate]="4"></ngb-rating>
+      <span>5.0</span>
+    </div>
+  </div>
+  <div *appHasRoles="['admin']">
+    <button mat-raised-button color="warn" (click)="removeReview()">Delete</button>
+  </div>
+</mat-card>
+
+
+<div *appHasRoles="['admin', 'user']; else anonInfo">
+  <div class="review-form">
+    <p class="subtitle">Add review</p>
+    <form #reviewForm="ngForm" fxLayout="column" (ngSubmit)="onReviewSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Review</mat-label>
+        <textarea name="review" required matInput ngModel #review="ngModel"></textarea>
+        <mat-error *ngIf="review.touched && review.hasError('required')">Review is required!</mat-error>
+      </mat-form-field>
+
+      <div fxLayout="row" fxLayoutAlign="space-between start">
+        <mat-form-field appearance="outline">
+          <mat-label>Quality of food</mat-label>
+          <select matNativeControl name="food" ngModel required #food="ngModel">
+            <option [value]="r" *ngFor="let r of ratesArray">{{ r }}</option>
+          </select>
+          <mat-error *ngIf="food.touched && food.hasError('required')">This field is required!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Service quality</mat-label>
+          <select matNativeControl name="service" ngModel required #service="ngModel">
+            <option [value]="r" *ngFor="let r of ratesArray">{{ r }}</option>
+          </select>
+          <mat-error *ngIf="service.touched && service.hasError('required')">This field is required!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Interior</mat-label>
+          <select matNativeControl name="interior" ngModel required #interior="ngModel">
+            <option [value]="r" *ngFor="let r of ratesArray">{{ r }}</option>
+          </select>
+          <mat-error *ngIf="interior.touched && interior.hasError('required')">This field is required!</mat-error>
+        </mat-form-field>
+
+        <button fxFlex="15%" type="submit" mat-raised-button color="primary" [disabled]="reviewForm.invalid">Submit
+          review
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <hr class="break-line">
+
+  <div class="image-form">
+    <p class="subtitle">Upload new photo</p>
+    <form #imageForm="ngForm" fxLayout="column" (ngSubmit)="onImageUpload()">
+      <mat-form-field appearance="outline">
+        <mat-label>Image</mat-label>
+        <app-file-input name="image" ngModel required #image="ngModel"></app-file-input>
+        <mat-error *ngIf="image.touched && image.hasError('required')">Image is required!</mat-error>
+      </mat-form-field>
+
+      <div fxLayout="row">
+        <button fxFlex="15%" type="submit" mat-raised-button color="primary" [disabled]="imageForm.invalid">Upload
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-template #anonInfo>
+  <p class="anon-info">Please register or log in to leave a review</p>
+</ng-template>
