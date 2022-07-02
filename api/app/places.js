@@ -82,6 +82,10 @@ router.delete('/:id', auth, permit('admin'), images.single('mainImage'), async (
       return res.status(404).send({error: `Not found by id = ${req.params.id}`});
     }
 
+    if (place.imagePath) {
+      await fs.unlink(place.imagePath);
+    }
+
     await Place.findByIdAndDelete(req.params.id);
 
     return res.send({message: `Deleted by id = ${req.params.id}`});

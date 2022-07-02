@@ -14,7 +14,7 @@ import {
   fetchPlacesFailure,
   fetchPlacesRequest,
   fetchPlacesSuccess,
-  fetchPlaceSuccess
+  fetchPlaceSuccess, removePlaceFailure, removePlaceRequest, removePlaceSuccess
 } from './places.actions';
 import { Router } from '@angular/router';
 
@@ -61,6 +61,18 @@ export class PlacesEffects {
       catchError((error) => {
         this.helpers.openSnackBar('Could not create place');
         return of(createPlaceFailure({ error }));
+      }),
+    )),
+  ));
+
+  removePlace = createEffect(() => this.actions.pipe(
+    ofType(removePlaceRequest),
+    mergeMap(({id}) => this.placesService.removeImage(id).pipe(
+      map(() => removePlaceSuccess()),
+      tap(() => this.store.dispatch(fetchPlacesRequest())),
+      catchError(() => {
+        this.helpers.openSnackBar('Could not delete place');
+        return of(removePlaceFailure());
       }),
     )),
   ));

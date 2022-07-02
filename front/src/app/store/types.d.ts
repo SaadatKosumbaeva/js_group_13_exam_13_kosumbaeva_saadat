@@ -17,6 +17,7 @@ export type PlacesState = {
   fetchPersonalLoading: boolean,
   createLoading: boolean,
   createError: string | null,
+  removeLoading: boolean,
 }
 
 export type AppState = {
