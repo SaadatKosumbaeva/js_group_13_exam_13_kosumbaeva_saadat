@@ -4,11 +4,18 @@ export interface User {
 }
 
 export interface Image {
-  _id: string
+  _id: string,
+  filename: string
 }
 
 export interface Review {
-  _id: string
+  _id: string,
+  user: User,
+  description: string,
+  foodRate: number,
+  serviceRate: number,
+  interiorRate: number,
+  datetime: Date
 }
 
 export interface Place {

@@ -13,6 +13,10 @@ export type UsersState = {
 export type PlacesState = {
   items: Place[],
   fetchLoading: boolean,
+  item: Place | null,
+  fetchPersonalLoading: boolean,
+  createLoading: boolean,
+  createError: string | null,
 }
 
 export type AppState = {

@@ -5,7 +5,14 @@ import { HelpersService } from '../../services/helpers.service';
 import { PlacesService } from '../../services/places.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
-import { fetchPlacesFailure, fetchPlacesRequest, fetchPlacesSuccess } from './places.actions';
+import {
+  fetchPlaceFailure,
+  fetchPlaceRequest,
+  fetchPlacesFailure,
+  fetchPlacesRequest,
+  fetchPlacesSuccess,
+  fetchPlaceSuccess
+} from './places.actions';
 
 @Injectable()
 export class PlacesEffects {
@@ -16,13 +23,24 @@ export class PlacesEffects {
   ) {
   }
 
-  fetchImages = createEffect(() => this.actions.pipe(
+  fetchPlaces = createEffect(() => this.actions.pipe(
     ofType(fetchPlacesRequest),
     mergeMap(() => this.placesService.fetchPlaces().pipe(
       map(items => fetchPlacesSuccess({ items })),
       catchError(() => {
         this.helpers.openSnackBar('Could not get places');
         return of(fetchPlacesFailure());
+      }),
+    )),
+  ));
+
+  fetchPlace = createEffect(() => this.actions.pipe(
+    ofType(fetchPlaceRequest),
+    mergeMap(({id}) => this.placesService.fetchPlace(id).pipe(
+      map(item => fetchPlaceSuccess({item})),
+      catchError(() => {
+        this.helpers.openSnackBar('Could not get place');
+        return of(fetchPlaceFailure());
       }),
     )),
   ));

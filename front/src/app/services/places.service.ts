@@ -14,6 +14,10 @@ export class PlacesService {
     return this.http.get<Place[]>(environment.apiUrl + '/places');
   }
 
+  fetchPlace(id: string) {
+    return this.http.get<Place>(environment.apiUrl + '/places/' + id);
+  }
+
   createPlace(data: PlaceData) {
     const formData = new FormData();
 

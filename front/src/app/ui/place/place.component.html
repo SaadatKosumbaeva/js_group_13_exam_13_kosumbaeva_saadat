@@ -3,7 +3,7 @@
     <img
       [src]="place.mainImage | image"
       [alt]="place.title"/>
-    <a [routerLink]="['places', 'id']">
+    <a [routerLink]="['places', place._id]">
       <mat-card-title>{{ place.title }}</mat-card-title>
     </a>
     <ngb-rating [max]="5" [readonly]="true" [rate]="place.averageRate"></ngb-rating>

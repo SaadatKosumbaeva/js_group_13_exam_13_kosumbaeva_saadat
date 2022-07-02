@@ -1,16 +1,12 @@
 <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="32px">
   <div>
-    <h4 class="title">Place title</h4>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, amet atque aut consequuntur corporis cumque
-      dicta
-      dolore dolorum ea enim eos error ex expedita iste laborum neque non nostrum perferendis placeat quae quisquam quos
-      repellendus sint soluta tempora ullam vitae voluptatem. Accusantium ad aliquam culpa dolorum explicabo provident
-      quisquam reprehenderit.</p>
+    <h4 class="title">{{ placeData?.title }}</h4>
+    <p>{{ placeData?.description }}</p>
   </div>
   <div>
     <img class="main-img"
-         [src]="'http://inspirationfeeed.files.wordpress.com/2013/02/link-7-spring_celebration_by_lavaspawn-d4y1t53.jpg'"
-         [alt]="">
+         [src]="placeData?.mainImage | image"
+         [alt]="placeData?.title">
     <div *appHasRoles="['admin']">
       <button mat-raised-button color="warn" (click)="remove()">Delete</button>
     </div>
@@ -19,10 +15,10 @@
 <div>
   <h6 class="subtitle">Gallery</h6>
   <div fxLayout="row wrap" fxLayoutGap="16px">
-    <div class="img-wrap">
+    <div class="img-wrap" *ngFor="let i of placeData?.images">
       <img class="img"
-           [src]="'http://inspirationfeeed.files.wordpress.com/2013/02/link-7-spring_celebration_by_lavaspawn-d4y1t53.jpg'"
-           [alt]="">
+           [src]="i?.filename"
+           [alt]="'Image of' + placeData?.title">
       <div *appHasRoles="['admin']">
         <button mat-raised-button color="warn" (click)="remove()">Delete</button>
       </div>
@@ -32,27 +28,26 @@
 
 <hr class="break-line">
 
-<mat-card class="review-block">
-  <h6 class="subtitle">Ratings</h6>
-  <p>On 20.06.2022, John Doe said</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos earum excepturi impedit magnam nobis nostrum
-    quisquam? Aspernatur dolores repellat vero!</p>
+<h6 class="subtitle">Ratings</h6>
+<mat-card class="review-block" *ngFor="let r of placeData?.reviews">
+  <p>On {{ r.datetime }}, John Doe said</p>
+  <p>{{ r.description }}</p>
   <div fxLayout="column" class="user-review">
     <div fxLayout="row" fxLayoutGap="16px">
       <span>Quality of food</span>
-      <ngb-rating [max]="5" [readonly]="true" [rate]="4"></ngb-rating>
+      <ngb-rating [max]="5" [readonly]="true" [rate]="r.foodRate"></ngb-rating>
       <span>5.0</span>
     </div>
 
     <div fxLayout="row" fxLayoutGap="16px">
       <span>Service quality</span>
-      <ngb-rating [max]="5" [readonly]="true" [rate]="4"></ngb-rating>
+      <ngb-rating [max]="5" [readonly]="true" [rate]="r.serviceRate"></ngb-rating>
       <span>5.0</span>
     </div>
 
     <div fxLayout="row" fxLayoutGap="16px">
       <span>Interior</span>
-      <ngb-rating [max]="5" [readonly]="true" [rate]="4"></ngb-rating>
+      <ngb-rating [max]="5" [readonly]="true" [rate]="r.interiorRate"></ngb-rating>
       <span>5.0</span>
     </div>
   </div>

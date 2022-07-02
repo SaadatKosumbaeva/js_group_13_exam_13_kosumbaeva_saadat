@@ -36,14 +36,20 @@ const ReviewSchema = new Schema({
   foodRate: {
     type: Number,
     required: true,
+    min: 0,
+    max: 5,
   },
   serviceRate: {
     type: Number,
     required: true,
+    min: 0,
+    max: 5,
   },
   interiorRate: {
     type: Number,
     required: true,
+    min: 0,
+    max: 5,
   },
   datetime: {
     type: Date,
@@ -68,25 +74,33 @@ const PlaceSchema = new Schema({
   averageRate: {
     type: Number,
     default: 0,
+    min: 0,
+    max: 5,
   },
   foodRate: {
     type: Number,
     default: 0,
+    min: 0,
+    max: 5,
   },
   serviceRate: {
     type: Number,
     default: 0,
+    min: 0,
+    max: 5,
   },
   interiorRate: {
     type: Number,
     default: 0,
+    min: 0,
+    max: 5,
   },
   images: [ImageSchema],
   reviews: [ReviewSchema],
 });
 
 PlaceSchema.set('toJSON', {
-  transform: (doc, ret, options) => {
+  transform: (doc, ret,   options) => {
     delete ret.imagePath;
     return ret;
   }
