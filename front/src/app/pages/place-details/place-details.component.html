@@ -68,8 +68,8 @@
     <form #reviewForm="ngForm" fxLayout="column" (ngSubmit)="onReviewSubmit()">
       <mat-form-field appearance="outline">
         <mat-label>Review</mat-label>
-        <textarea name="review" required matInput ngModel #review="ngModel"></textarea>
-        <mat-error *ngIf="review.touched && review.hasError('required')">Review is required!</mat-error>
+        <textarea name="description" required matInput ngModel #description="ngModel"></textarea>
+        <mat-error *ngIf="description.touched && description.hasError('required')">Review is required!</mat-error>
       </mat-form-field>
 
       <div fxLayout="row" fxLayoutAlign="space-between start">
