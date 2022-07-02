@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    const places = await Place.find();
+    const places = await Place.find().sort({'_id': -1});
 
     return res.send(places);
   } catch (e) {

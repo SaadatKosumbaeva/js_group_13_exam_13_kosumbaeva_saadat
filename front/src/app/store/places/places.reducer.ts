@@ -1,6 +1,9 @@
 import { PlacesState } from '../types';
 import { createReducer, on } from '@ngrx/store';
 import {
+  createPlaceFailure,
+  createPlaceRequest,
+  createPlaceSuccess,
   fetchPlaceFailure,
   fetchPlaceRequest,
   fetchPlacesFailure,
@@ -14,14 +17,19 @@ const initialState: PlacesState = {
   items: [],
   fetchLoading: false,
   fetchPersonalLoading: false,
+  createLoading: false,
+  createError: null,
 };
 
 export const placesReducer = createReducer(
   initialState,
-  on(fetchPlacesRequest, state => ({...state, fetchLoading: true})),
-  on(fetchPlacesSuccess, (state, {items}) => ({...state, fetchLoading: false, items})),
-  on(fetchPlacesFailure, state => ({...state, fetchLoading: false})),
-  on(fetchPlaceRequest, state => ({...state, fetchPersonalLoading: true})),
-  on(fetchPlaceSuccess, (state, {item}) => ({...state, fetchPersonalLoading: false, item})),
-  on(fetchPlaceFailure, state => ({...state, fetchPersonalLoading: false})),
+  on(fetchPlacesRequest, state => ({ ...state, fetchLoading: true })),
+  on(fetchPlacesSuccess, (state, { items }) => ({ ...state, fetchLoading: false, items })),
+  on(fetchPlacesFailure, state => ({ ...state, fetchLoading: false })),
+  on(fetchPlaceRequest, state => ({ ...state, fetchPersonalLoading: true })),
+  on(fetchPlaceSuccess, (state, { item }) => ({ ...state, fetchPersonalLoading: false, item })),
+  on(fetchPlaceFailure, state => ({ ...state, fetchPersonalLoading: false })),
+  on(createPlaceRequest, state => ({ ...state, createError: null, createLoading: true })),
+  on(createPlaceSuccess, state => ({ ...state, createLoading: false })),
+  on(createPlaceFailure, (state, { error }) => ({ ...state, createLoading: false, createError: error })),
 )
