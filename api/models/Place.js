@@ -7,26 +7,17 @@ const ImageSchema = new Schema({
     ref: 'User',
     required: true,
   },
-  place: {
-    type: Schema.Types.ObjectId,
-    ref: 'Place',
-    required: true,
-  },
   filename: {
     type: String,
     required: true,
   },
+  imagePath: String,
 });
 
 const ReviewSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
-  },
-  place: {
-    type: Schema.Types.ObjectId,
-    ref: 'Place',
     required: true,
   },
   description: {
@@ -97,6 +88,13 @@ const PlaceSchema = new Schema({
   },
   images: [ImageSchema],
   reviews: [ReviewSchema],
+});
+
+ImageSchema.set('toJSON', {
+  transform: (doc, ret,   options) => {
+    delete ret.imagePath;
+    return ret;
+  }
 });
 
 PlaceSchema.set('toJSON', {

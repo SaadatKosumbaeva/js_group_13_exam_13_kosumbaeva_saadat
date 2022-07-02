@@ -39,3 +39,16 @@ export interface PlaceData {
   description?: string,
   mainImage: File,
 }
+
+export interface ReviewData {
+  description: string,
+  foodRate: number,
+  serviceRate: number,
+  interiorRate: number,
+}
+
+export interface ImageData {
+  [key: string]: any,
+
+  image: File,
+}

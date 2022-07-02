@@ -9,12 +9,21 @@ import {
   createPlaceFailure,
   createPlaceRequest,
   createPlaceSuccess,
+  createReviewFailure,
+  createReviewRequest,
+  createReviewSuccess,
   fetchPlaceFailure,
   fetchPlaceRequest,
   fetchPlacesFailure,
   fetchPlacesRequest,
   fetchPlacesSuccess,
-  fetchPlaceSuccess, removePlaceFailure, removePlaceRequest, removePlaceSuccess
+  fetchPlaceSuccess,
+  removePlaceFailure,
+  removePlaceRequest,
+  removePlaceSuccess,
+  uploadImageFailure,
+  uploadImageRequest,
+  uploadImageSuccess
 } from './places.actions';
 import { Router } from '@angular/router';
 
@@ -73,6 +82,36 @@ export class PlacesEffects {
       catchError(() => {
         this.helpers.openSnackBar('Could not delete place');
         return of(removePlaceFailure());
+      }),
+    )),
+  ));
+
+  createReview = createEffect(() => this.actions.pipe(
+    ofType(createReviewRequest),
+    mergeMap(({ data, id }) => this.placesService.createReview(id, data).pipe(
+      map(() => createReviewSuccess()),
+      tap(() => {
+        this.store.dispatch(fetchPlaceRequest({id}));
+        this.helpers.openSnackBar('Uploaded successful!');
+      }),
+      catchError((error) => {
+        this.helpers.openSnackBar('Could not create review');
+        return of(createReviewFailure({ error }));
+      }),
+    )),
+  ));
+
+  uploadImage = createEffect(() => this.actions.pipe(
+    ofType(uploadImageRequest),
+    mergeMap(({ data, id }) => this.placesService.uploadImage(data, id).pipe(
+      map(() => uploadImageSuccess()),
+      tap(() => {
+        this.store.dispatch(fetchPlaceRequest({id}));
+        this.helpers.openSnackBar('Uploaded successful!');
+      }),
+      catchError((error) => {
+        this.helpers.openSnackBar('Could not upload image');
+        return of(uploadImageFailure({ error }));
       }),
     )),
   ));

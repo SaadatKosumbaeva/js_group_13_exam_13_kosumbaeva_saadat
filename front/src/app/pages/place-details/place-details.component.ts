@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Place } from '../../models/place.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/types';
 import { ActivatedRoute } from '@angular/router';
-import { fetchPlaceRequest } from '../../store/places/places.actions';
+import { createReviewRequest, fetchPlaceRequest, uploadImageRequest } from '../../store/places/places.actions';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-place-details',
@@ -12,6 +13,9 @@ import { fetchPlaceRequest } from '../../store/places/places.actions';
   styleUrls: ['./place-details.component.sass']
 })
 export class PlaceDetailsComponent implements OnInit, OnDestroy {
+  @ViewChild('reviewForm') reviewForm!: NgForm;
+  @ViewChild('imageForm') imageForm!: NgForm;
+
   ratesArray = [1, 2, 3, 4, 5];
   place: Observable<Place | null>;
   placeSub!: Subscription;
@@ -31,16 +35,17 @@ export class PlaceDetailsComponent implements OnInit, OnDestroy {
     this.placeSub = this.place.subscribe(place => {
       if (place) {
         this.placeData = place;
+        console.log(this.placeData);
       }
     })
   }
 
   onReviewSubmit() {
-
+    this.store.dispatch(createReviewRequest({data: this.reviewForm.value, id: this.placeData._id}));
   }
 
   onImageUpload() {
-
+    this.store.dispatch(uploadImageRequest({data: this.reviewForm.value, id: this.placeData._id}));
   }
 
   remove() {

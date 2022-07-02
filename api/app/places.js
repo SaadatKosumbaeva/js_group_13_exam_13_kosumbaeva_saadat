@@ -53,6 +53,53 @@ router.post('/', auth, images.single('mainImage'), async (req, res, next) => {
   }
 });
 
+router.patch('/:id', auth, images.single('image'), async (req, res, next) => {
+  try {
+    const place = await Place.findById(req.params.id);
+
+    if (req.file) {
+      const image = {
+        user: req.user._id,
+        filename: req.file.filename,
+        imagePath: req.file.path,
+      };
+
+      place.images.push(image);
+      await place.save();
+    } else if (req.body) {
+      const review = {
+        user: req.user._id,
+        description: req.body.description,
+        foodRate: req.body.foodRate,
+        serviceRate: req.body.serviceRate,
+        interiorRate: req.body.interiorRate,
+      };
+
+      place.reviews.push(review);
+
+      const totalRates = place.reviews.reduce((previousValue, currentValue) => previousValue + (currentValue.foodRate + currentValue.serviceRate + currentValue.interiorRate), 0);
+      place.averageRate = Math.round((totalRates / place.reviews.length) * 10 / 30);
+
+      const totalFoodRate = place.reviews.reduce((previousValue, currentValue) => previousValue + (currentValue.foodRate), 0);
+      place.foodRate = Math.round((totalFoodRate / place.reviews.length) * 10) / 10;
+
+      const totalServiceRate = place.reviews.reduce((previousValue, currentValue) => previousValue + (currentValue.serviceRate), 0);
+      place.serviceRate = Math.round((totalServiceRate / place.reviews.length) * 10) / 10;
+
+      const totalInteriorRate = place.reviews.reduce((previousValue, currentValue) => previousValue + (currentValue.interiorRate), 0);
+      place.interiorRate = Math.round((totalInteriorRate / place.reviews.length) * 10) / 10;
+
+      await place.save();
+    } else {
+      return res.status(422).send({error: `Please enter the data`});
+    }
+
+    return res.send(place);
+  } catch (e) {
+    next(e);
+  }
+});
+
 router.delete('/image/:id', auth, permit('admin'), async (req, res, next) => {
   try {
     const place = await Place.findById(req.params.id);

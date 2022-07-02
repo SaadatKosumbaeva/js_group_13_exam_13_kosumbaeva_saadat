@@ -4,12 +4,21 @@ import {
   createPlaceFailure,
   createPlaceRequest,
   createPlaceSuccess,
+  createReviewFailure,
+  createReviewRequest,
+  createReviewSuccess,
   fetchPlaceFailure,
   fetchPlaceRequest,
   fetchPlacesFailure,
   fetchPlacesRequest,
   fetchPlacesSuccess,
-  fetchPlaceSuccess, removePlaceFailure, removePlaceRequest, removePlaceSuccess
+  fetchPlaceSuccess,
+  removePlaceFailure,
+  removePlaceRequest,
+  removePlaceSuccess,
+  uploadImageFailure,
+  uploadImageRequest,
+  uploadImageSuccess
 } from './places.actions';
 
 const initialState: PlacesState = {
@@ -20,6 +29,9 @@ const initialState: PlacesState = {
   createLoading: false,
   createError: null,
   removeLoading: false,
+  createReviewLoading: false,
+  createReviewError: null,
+  uploadImageLoading: false,
 };
 
 export const placesReducer = createReducer(
@@ -36,4 +48,10 @@ export const placesReducer = createReducer(
   on(removePlaceRequest, state => ({...state, removeLoading: true})),
   on(removePlaceSuccess, state => ({...state, removeLoading: false})),
   on(removePlaceFailure, state => ({...state, removeLoading: true})),
+  on(createReviewRequest, state => ({ ...state, createReviewError: null, createReviewLoading: true })),
+  on(createReviewSuccess, state => ({ ...state, createReviewLoading: false })),
+  on(createReviewFailure, (state, { error }) => ({ ...state, createReviewLoading: false, createReviewError: error })),
+  on(uploadImageRequest, state => ({ ...state, uploadImageLoading: true})),
+  on(uploadImageSuccess, state => ({ ...state, uploadImageLoading: false })),
+  on(uploadImageFailure, (state, { error }) => ({ ...state, uploadImageLoading: false })),
 )

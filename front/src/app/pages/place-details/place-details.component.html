@@ -17,8 +17,8 @@
   <div fxLayout="row wrap" fxLayoutGap="16px">
     <div class="img-wrap" *ngFor="let i of placeData?.images">
       <img class="img"
-           [src]="i?.filename"
-           [alt]="'Image of' + placeData?.title">
+           [src]="i?.filename | image"
+           [alt]="'Image of ' + placeData?.title">
       <div *appHasRoles="['admin']">
         <button mat-raised-button color="warn" (click)="remove()">Delete</button>
       </div>
@@ -29,26 +29,57 @@
 <hr class="break-line">
 
 <h6 class="subtitle">Ratings</h6>
+<mat-card>
+  <div fxLayout="column" class="user-review">
+    <div fxLayout="row" fxLayoutGap="16px" style="width: 350px">
+      <span fxFlex="50%">Overall:</span>
+      <ngb-rating fxFlex="40%" [max]="5" [readonly]="true" [rate]="placeData.averageRate"></ngb-rating>
+      <span fxFlex="10%">{{ placeData?.averageRate }}</span>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="16px" style="width: 350px">
+      <span fxFlex="50%">Quality of food</span>
+      <ngb-rating fxFlex="40%" [max]="5" [readonly]="true" [rate]="placeData.foodRate"></ngb-rating>
+      <span fxFlex="10%">{{ placeData?.foodRate }}</span>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="16px" style="width: 350px">
+      <span fxFlex="50%">Service quality</span>
+      <ngb-rating fxFlex="40%" [max]="5" [readonly]="true" [rate]="placeData.serviceRate"></ngb-rating>
+      <span fxFlex="10%">{{ placeData?.serviceRate }}</span>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="16px" style="width: 350px">
+      <span fxFlex="50%">Interior</span>
+      <ngb-rating fxFlex="40%" [max]="5" [readonly]="true" [rate]="placeData.interiorRate"></ngb-rating>
+      <span fxFlex="10%">{{ placeData?.interiorRate }}</span>
+    </div>
+  </div>
+</mat-card>
+
+<hr class="break-line">
+
+<h6 class="subtitle">Reviews</h6>
 <mat-card class="review-block" *ngFor="let r of placeData?.reviews">
   <p>On {{ r.datetime }}, John Doe said</p>
   <p>{{ r.description }}</p>
   <div fxLayout="column" class="user-review">
-    <div fxLayout="row" fxLayoutGap="16px">
-      <span>Quality of food</span>
-      <ngb-rating [max]="5" [readonly]="true" [rate]="r.foodRate"></ngb-rating>
-      <span>5.0</span>
+    <div fxLayout="row" fxLayoutGap="16px" style="width: 350px">
+      <span fxFlex="50%">Quality of food</span>
+      <ngb-rating fxFlex="40%" [max]="5" [readonly]="true" [rate]="r.foodRate"></ngb-rating>
+      <span fxFlex="10%">{{ r.foodRate }}.0</span>
     </div>
 
-    <div fxLayout="row" fxLayoutGap="16px">
-      <span>Service quality</span>
-      <ngb-rating [max]="5" [readonly]="true" [rate]="r.serviceRate"></ngb-rating>
-      <span>5.0</span>
+    <div fxLayout="row" fxLayoutGap="16px" style="width: 350px">
+      <span fxFlex="50%">Service quality</span>
+      <ngb-rating fxFlex="40%" [max]="5" [readonly]="true" [rate]="r.serviceRate"></ngb-rating>
+      <span fxFlex="10%">{{ r.serviceRate }}.0</span>
     </div>
 
-    <div fxLayout="row" fxLayoutGap="16px">
-      <span>Interior</span>
-      <ngb-rating [max]="5" [readonly]="true" [rate]="r.interiorRate"></ngb-rating>
-      <span>5.0</span>
+    <div fxLayout="row" fxLayoutGap="16px" style="width: 350px">
+      <span fxFlex="50%">Interior</span>
+      <ngb-rating fxFlex="40%" [max]="5" [readonly]="true" [rate]="r.interiorRate"></ngb-rating>
+      <span fxFlex="10%">{{ r.interiorRate }}.0</span>
     </div>
   </div>
   <div *appHasRoles="['admin']">
@@ -70,7 +101,7 @@
       <div fxLayout="row" fxLayoutAlign="space-between start">
         <mat-form-field appearance="outline">
           <mat-label>Quality of food</mat-label>
-          <select matNativeControl name="food" ngModel required #food="ngModel">
+          <select matNativeControl name="foodRate" ngModel required #food="ngModel">
             <option [value]="r" *ngFor="let r of ratesArray">{{ r }}</option>
           </select>
           <mat-error *ngIf="food.touched && food.hasError('required')">This field is required!</mat-error>
@@ -78,7 +109,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Service quality</mat-label>
-          <select matNativeControl name="service" ngModel required #service="ngModel">
+          <select matNativeControl name="serviceRate" ngModel required #service="ngModel">
             <option [value]="r" *ngFor="let r of ratesArray">{{ r }}</option>
           </select>
           <mat-error *ngIf="service.touched && service.hasError('required')">This field is required!</mat-error>
@@ -86,7 +117,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Interior</mat-label>
-          <select matNativeControl name="interior" ngModel required #interior="ngModel">
+          <select matNativeControl name="interiorRate" ngModel required #interior="ngModel">
             <option [value]="r" *ngFor="let r of ratesArray">{{ r }}</option>
           </select>
           <mat-error *ngIf="interior.touched && interior.hasError('required')">This field is required!</mat-error>

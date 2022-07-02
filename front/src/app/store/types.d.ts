@@ -18,6 +18,9 @@ export type PlacesState = {
   createLoading: boolean,
   createError: string | null,
   removeLoading: boolean,
+  createReviewLoading: boolean,
+  createReviewError: null | string,
+  uploadImageLoading: boolean,
 }
 
 export type AppState = {
